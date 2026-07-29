@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>acmenus</title>
+    <!-- Google Fonts for typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-dark: #080b11;
+            --card-bg: rgba(18, 24, 38, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-glow: #a855f7;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(168, 85, 247, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.12) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism Header */
+        header {
+            background: rgba(15, 21, 33, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #06b6d4, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: lowercase;
+            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));
+        }
+
+        /* Admin Panel Button */
+        .glow-btn {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.2));
+            color: var(--text-main);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            padding: 10px 22px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(8px);
+            display: inline-block;
+        }
+
+        .glow-btn:hover {
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(6, 182, 212, 0.3));
+        }
+
+        /* Main Container */
+        main {
+            max-width: 900px;
+            width: 100%;
+            margin: 50px auto;
+            padding: 0 24px;
+            flex-grow: 1;
+        }
+
+        .hero-section {
+            margin-bottom: 36px;
+            text-align: left;
+        }
+
+        .hero-section h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-section p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* Card List */
+        .file-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .file-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 20px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .file-card:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .file-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.2px;
+        }
+
+        .download-trigger-btn {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-glow));
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .download-trigger-btn:hover {
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+            transform: scale(1.03);
+        }
+
+        .empty-state {
+            background: var(--card-bg);
+            border: 1px dashed var(--card-border);
+            border-radius: 20px;
+            padding: 50px 20px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        /* Credits Footer */
+        footer {
+            margin-top: auto;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid var(--card-border);
+            background: rgba(8, 11, 17, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .credit-badge {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            font-size: 13px;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .credit-badge span {
+            color: var(--accent-pink);
+            font-weight: 600;
+        }
+
+        /* Glass Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(4, 6, 10, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #0f172a;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 24px;
+            padding: 36px;
+            width: 90%;
+            max-width: 440px;
+            box-shadow: 0 0 50px rgba(168, 85, 247, 0.2);
+            animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-box h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .input-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-control:focus {
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn-cancel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--accent-glow), var(--accent-cyan));
+            color: #fff;
+            border: none;
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+        }
+
+        .error-msg {
+            color: var(--accent-pink);
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="brand-title">acmenus</h1>
+        <button id="adminBtn" class="glow-btn" type="button" onclick="openAdminModal()">
+            Admin Panel
+        </button>
+    </header>
+
+    <main>
+        <div class="hero-section">
+            <h2>Available Downloads</h2>
+            <p>Click any item below to start download and redirect to target link.</p>
+        </div>
+
+        <ul id="fileList" class="file-list">
+            <!-- Dynamic Files Loaded Here -->
+        </ul>
+    </main>
+
+    <footer>
+        <div class="credit-badge">
+            made by <span>chineses worker 3</span>
+        </div>
+    </footer>
+
+    <!-- Password Modal -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Admin Access</h3>
+            <div class="form-group">
+                <label for="adminPass">Enter Security Password</label>
+                <input type="password" id="adminPass" class="input-control" placeholder="Password">
+            </div>
+            <div id="authError" class="error-msg">Incorrect password! Try again.</div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeModal('authModal')">Cancel</button>
+                <button type="button" class="btn-submit" onclick="authenticateAdmin()">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Control Panel Modal -->
+    <div id="adminPanelModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Add New Item</h3>
+            
+            <div class="form-group">
+                <label for="itemName">File / Display Name</label>
+                <input type="text" id="itemName" class="input-control" placeholder="e.g. Menu Package v1">
+            </div>
+
+            <div class="form-group">
+                <label for="fileUrl">Download File Direct URL</label>
+                <input type="url" id="fileUrl" class="input-control" placeholder="https://example.com/file.zip">
+            </div>
+
+            <div class="form-group">
+                <label for="redirectUrl">Redirect Destination Link</label>
+                <input type="url" id="redirectUrl" class="input-control" placeholder="https://example.com/target">
+            </div>
+
+            <div id="adminError" class="error-msg">Please fill out all fields!</div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" onclick="closeModal('adminPanelModal')">Close</button>
+                <button type="button" class="btn-submit" onclick="addNewEntry()">Add Entry</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = "lukeistsigma";
+
+        document.addEventListener("DOMContentLoaded", loadItems);
+
+        function openAdminModal() {
+            document.getElementById("authError").style.display = "none";
+            document.getElementById("adminPass").value = "";
+            document.getElementById("authModal").classList.add("active");
+            setTimeout(() => {
+                document.getElementById("adminPass").focus();
+            }, 50);
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove("active");
+        }
+
+        function authenticateAdmin() {
+            const input = document.getElementById("adminPass").value;
+            if (input === ADMIN_PASSWORD) {
+                closeModal("authModal");
+                document.getElementById("adminError").style.display = "none";
+                document.getElementById("adminPanelModal").classList.add("active");
+            } else {
+                document.getElementById("authError").style.display = "block";
+            }
+        }
+
+        function getStoredItems() {
+            return JSON.parse(localStorage.getItem("acmenus_items")) || [];
+        }
+
+        function addNewEntry() {
+            const name = document.getElementById("itemName").value.trim();
+            const downloadUrl = document.getElementById("fileUrl").value.trim();
+            const redirectUrl = document.getElementById("redirectUrl").value.trim();
+
+            if (!name || !downloadUrl || !redirectUrl) {
+                document.getElementById("adminError").style.display = "block";
+                return;
+            }
+
+            const items = getStoredItems();
+            items.push({ name, downloadUrl, redirectUrl });
+            localStorage.setItem("acmenus_items", JSON.stringify(items));
+
+            document.getElementById("itemName").value = "";
+            document.getElementById("fileUrl").value = "";
+            document.getElementById("redirectUrl").value = "";
+            closeModal("adminPanelModal");
+            loadItems();
+        }
+
+        function handleDownloadAndRedirect(itemName, downloadUrl, redirectUrl) {
+            const a = document.createElement('a');
+            a.href = downloadUrl;
+            a.download = '';
+            a.target = '_blank';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, 500);
+        }
+
+        function loadItems() {
+            const list = document.getElementById("fileList");
+            list.innerHTML = "";
+            const items = getStoredItems();
+
+            if (items.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <p style="font-size: 16px; font-weight: 600; color: #fff;">No active menus available</p>
+                        <p style="font-size: 13px; margin-top: 6px;">Use the Admin Panel at top right to upload and link new entries.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            items.forEach(item => {
+                const li = document.createElement("li");
+                li.className = "file-card";
+
+                li.innerHTML = `
+                    <div class="file-info">
+                        <span class="file-title">\${item.name}</span>
+                    </div>
+                    <button class="download-trigger-btn">Download & Launch</button>
+                `;
+
+                const button = li.querySelector(".download-trigger-btn");
+                button.onclick = () => handleDownloadAndRedirect(item.name, item.downloadUrl, item.redirectUrl);
+
+                list.appendChild(li);
+            });
+        }
+
+        // Enter key listeners
+        document.getElementById("adminPass").addEventListener("keyup", function(e) {
+            if (e.key === "Enter") authenticateAdmin();
+        });
+    </script>
+</body>
+</html>
